@@ -30,4 +30,14 @@ currentUser$=this.currentUserSource.asObservable();
   setCurrentUser(user:User){
     this.currentUserSource.next(user);
   }
+  register(model:any)
+  {
+    return this.http.post<User>(this.baseUrl+'/account/register',model).pipe(
+      map(user=>{
+        localStorage.setItem('user',JSON.stringify(user));
+        this.currentUserSource.next(user);
+        return user;
+      })
+    )
+  }
 }
